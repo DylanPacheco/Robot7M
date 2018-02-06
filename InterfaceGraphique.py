@@ -25,10 +25,30 @@ frame1.pack(side=TOP, padx=5, pady=5)
 #label_frame1
 Label(frame1, text="Carré gris = Arene 500 x 500px").pack()
 
+#ajout de l'event 'clavier' et des attributs PosX et PosY pour le robot
+def clavier(event):
+	touche = event.keysym
+	print(touche)
+	if touche == 'Up':
+		PosX = PosX + 20
+	if touche == 'Left':
+		PosY = PosY - 20
+	if touche == 'Right':
+		PosY = PosY + 20
+	if touche == 'Down':
+		PosX = PosX - 20
+	canvas1.coords(Robot, PosX -10, PosY -10, PosX +10, PosY +10)
+PosX = 250
+PosY = 250
+
 #creation d'un canvas (toile ou tableau) dans la fenetre
 canvas1 = Canvas(frame1, width=a1.lx, height=a1.ly, background="grey")
 canvas1.pack()
 
+#ajout du robot
+Robot = canvas1.create_rectangle(PosX -5,PosY -5,PosX +5,PosY +5,fill'blue')
+canvas1.focus_set()
+canvas1.bind('Key',Clavier)
 
 
 ##  TEST DE CREATION PLUS AFFICHAGE DE L'ARENE ET DES BLOCS
