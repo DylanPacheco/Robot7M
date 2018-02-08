@@ -7,10 +7,10 @@
 # import
 
 from tkinter import *
-from Arene import *
-from Cube import *
-from Mur import *
-from Sol import *
+from Structures.Arene import *
+from Basiques.Cube import *
+from Basiques.Mur import *
+from Basiques.Sol import *
 import random
 
 # code
