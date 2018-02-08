@@ -174,21 +174,31 @@ canvas_console.pack()
 
 #_________________________________TOUCHES CLAVIER_________________________________
 
-#fonction permettant de deplacer le robot
+robot_rectangle=canvas1.create_rectangle(0, 0, 0, 0, fill="white")
+
 def clavier(event):
-	touche = event.keysym
-	print(touche)
-	if touche == 'Up':
-		robot.move()
-	if touche == 'Left':
-		robot.rotation(90)
-		robot.move()
-	if touche == 'Right':
-		robot.rotation(270)
-		robot.move()
-	if touche == 'Down':
-		robot.rotation(180)
-		robot.move()
+    x,y,z = a1.liste_robot[0].position
+    long, larg, haut = a1.liste_robot[0].dimension
+    touche=event.keysym
+    print(touche)
+    if touche=='Up':
+        a1.liste_robot[0].move()
+        x,y,z = a1.liste_robot[0].position
+    if touche =='Left':
+        a1.liste_robot[0].rotation(90)
+        a1.liste_robot[0].move()
+        x,y,z = a1.liste_robot[0].position
+    if touche =='Right':
+        a1.liste_robot[0].rotation(270)
+        a1.liste_robot[0].move()
+        x,y,z = a1.liste_robot[0].position
+    if touche=='Down':
+        a1.liste_robot[0].rotation(180)
+        a1.liste_robot[0].move()
+        x,y,z = a1.liste_robot[0].position
+    canvas1.coords(robot_rectangle,x, y, x + larg, y + long)
+
+canvas1.bind_all('<Key>', clavier)
 
 
 # ___________________________________NETTOYAGE DU CANEVAS___________________________________
