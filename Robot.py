@@ -47,8 +47,8 @@ class Robot:
                 """
                 print("Robot(Pos",self.position,",Dir",self.direction,",Dim",self.dimension,",Vit(",self.vitesse,"))")
                 
-	def detecter_mur(self,arene):
-		"""Methode pour verifier si un mur se trouve sur la trajectoire du robot.
+	def detecter_cube(self,arene):
+		"""Methode pour verifier si un cube se trouve sur la trajectoire du robot.
 		Prend l'arene en parametre.
 		"""
 		px, py, pz = self.getPosition()
@@ -67,7 +67,7 @@ class Robot:
 			i=i+10
 		self.__setPosition((px,py,pz))
 		self.__setVitesse(v)
-		print("Pas de mur.")
+		print("Pas de cube.")
 	
 
 	"""-----------------------GETTTER-------------------------"""
@@ -120,7 +120,7 @@ def Creation_Robot(arene):
 
 def Creation_Robot_xy(x,y,arene):
         """creation d'un Robot avec une position connue.
-	Sert a faire des tests pour la fonction detecter_mur."""
+	Sert a faire des tests pour la fonction detecter_cube."""
 
         x = x
         y = y
