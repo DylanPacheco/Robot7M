@@ -1,3 +1,10 @@
+#imports
+
+import random
+import math
+
+#code
+
 class Robot:
 	"""
 		Classe caractérisé par:
@@ -13,7 +20,6 @@ class Robot:
 		self.dimension = dimension
 		self.vitesse = 0
 
-
 	def move(self):
 		x, y, z = self.getPosition()
 		a, b, c = self.getDirection()
@@ -23,16 +29,46 @@ class Robot:
 		z += c*vitesse
 		self.__setPosition((x, y, z))
 
+	#teta: int en degré
 	def rotation(self, teta):
+		teta = math.radians(teta)
 		a, b, c = self.getDirection()
-		a = a*Math.cos(teta) - y*Math.sin(teta)
-		y = x*Math.sin(teta) + y*Math.cos(teta)
+		temp = a
+		a = a*math.cos(teta) - b*math.sin(teta)
+		b = temp*math.sin(teta) + b*math.cos(teta)
 		self.__setDirection((a, b, c))
 
 	def toString(self):
-		return "position:",self.getPosition()
-		#à compléter
+		return "position: {0}, direction: {1}, vitesse: {2}".format(self.getPosition(),self.getDirection(),self.getVitesse())
 
+	def safficher(self):
+                """Methode d'affichage d'un robot au format :
+                Robot[position, direction, taille, vitesse]
+                """
+                print("Robot(Pos",self.position,",Dir",self.direction,",Dim",self.dimension,",Vit(",self.vitesse,"))")
+                
+	def detecter_mur(self,arene):
+		"""Methode pour verifier si un mur se trouve sur la trajectoire du robot.
+		Prend l'arene en parametre.
+		"""
+		px, py, pz = self.getPosition()
+		dx, dy, dz = self.getDirection()
+		v = self.getVitesse()
+		self.__setVitesse(1)
+		i=0
+		while i<=(dx*2):
+			self.move()
+			x,y,z = self.getPosition()
+			if (arene.isCubeAtPoint(x,y,z)==True):
+				print("Un cube est trop proche.")
+				self.__setPosition((dx,dy,dz))
+				self.__setVitesse(v)
+				return
+			i=i+10
+		self.__setPosition((px,py,pz))
+		self.__setVitesse(v)
+		print("Pas de mur.")
+	
 
 	"""-----------------------GETTTER-------------------------"""
 	def getPosition(self):
@@ -49,19 +85,53 @@ class Robot:
 
 	"""-----------------------SETTER-------------------------"""
 	def __setPosition(self, position):
-		self.positon = position
+		self.position = position
 
 	def __setDirection(self, direction):
 		self.direction = direction
 
 	def __setVitesse(self, vitesse):
 		self.vitesse = vitesse
+		
+	
+	"""-----------------------SAVER-------------------------"""
+	def toSaveF(self, f):
+	    """Ecrit les coordonnees du robot dans le fichier ouvert passe en argument, avec ';' comme separation"""
+	    f.write('Robot;' + str(self.position) + ';' +  str(self.direction) + ';' + str(self.dimension) + ';' + str(self.vitesse) + ';\n')
 
 
-def creation_robot() :
-    """ Test création robot"""
-    robot = Robot((0,0,0), (0,0,0), (1,1,1))
-    robot.move()
-    robot.toString()
+def Creation_Robot(arene):
+        """creation d'un Robot avec une position aleatoire"""
 
-creation_robot()
+        x = random.randint(0, arene.lx)
+        y = random.randint(0, arene.ly)
+        z = 1   #un robot est posé sur le sol
+
+        dirx = 20
+        diry = 20
+        dirz = 0
+
+        larg = 50
+        long = 50
+        haut = 10
+
+        return Robot((x, y, z), (dirx, diry, dirz), (larg, long, haut))
+
+
+def Creation_Robot_xy(x,y,arene):
+        """creation d'un Robot avec une position connue.
+	Sert a faire des tests pour la fonction detecter_mur."""
+
+        x = x
+        y = y
+        z = 1   #un robot est posé sur le sol
+
+        dirx = 20
+        diry = 20
+        dirz = 0
+
+        larg = 50
+        long = 50
+        haut = 10
+
+        return Robot((x, y, z), (dirx, diry, dirz), (larg, long, haut))
