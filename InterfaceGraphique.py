@@ -201,20 +201,6 @@ def clavier(event):
 canvas1.bind_all('<Key>', clavier)
 
 
-#_________________________________DETECTER MUR___________________________________
-
-def detecter_mur():
-	x,y,z = a1.liste_robot[0].position
-
-	nb_cubes = len(a1.liste_cube[])
-	while nb_cubes != 0:
-		dx,dy,dz = a1.liste_cube[nb_cubes].getPos()
-		#il faudrait egalement prendre en compte la taille du cube (larg, long et haut) mais il n'existe pas de setter sur ces parametres dans la classe Robot.
-		if (abs(x-dx)<50 or abs(y-dy)<50):
-			print("Un cube est trop proche du robot. Coordonnées du cube : " + dx + "," + dy + "," + dz)
-		nb_cubes = nb_cubes - 1
-		
-
 # ___________________________________NETTOYAGE DU CANEVAS___________________________________
 
 def effacer():
