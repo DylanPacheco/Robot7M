@@ -1,3 +1,5 @@
+
+#-*- coding: utf-8 -*-
 from basiques.Cube import *
 
 class Sol(Cube):

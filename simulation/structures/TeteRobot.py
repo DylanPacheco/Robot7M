@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 import random
 import math
 from structures.Robot import *
