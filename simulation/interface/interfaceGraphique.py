@@ -6,11 +6,11 @@
 # import
 
 from tkinter import *
-from Arene import *
-from Cube import *
-from Mur import *
-from Sol import *
-from Capteur import *
+from structures.arene import *
+from basiques.cube import *
+from basiques.mur import *
+from basiques.sol import *
+from structures.capteur import *
 import random
 
 # code
@@ -152,29 +152,36 @@ canvas_console.pack()
 
 def clavier(event):
     #xr,yr,zr = a1.liste_robot[0].position
+
+    
     robot = a1.liste_robot[0]
     long, larg, haut = robot.dimension
+    capteur = robot.capteur
     
     touche=event.keysym
     #print(touche)
+    print(capteur)
     if touche=='Up':
         #a1.liste_robot[0].rotation(90)
         #a1.liste_robot[0].move(a1.liste_robot[0].direction)
         #x,y,z = a1.liste_robot[0].position
-        capteur = Capteur(a1)
         #test = capteur.detecter()
-        print(robot.coords)
+        #print(robot.coords)
         x = (robot.coords[0][0] + robot.coords[1][0]) /2
         y = (robot.coords[0][1] + robot.coords[1][1]) /2
 
         print("milieux face avant rob=", round(x,2), round(y,2))
+        """
         #print(robot.dimension[2])
         estdansunbloc = isCubeList(x,y,robot.position[2], a1.liste_cube)
         
         if(estdansunbloc == False):
             print("est dans un bloc:",estdansunbloc)
-        a1.liste_robot[0].setVitesse(1)
-        robot.move_bis()
+        """
+        res = capteur.detecter(a1)
+        if(not(res)):
+            a1.liste_robot[0].setVitesse(2)
+            robot.move_bis()
         rafraichir(a1)
         #if(capteur.detecter() == False):
         #    a1.liste_robot[0].move_bis()
@@ -187,7 +194,7 @@ def clavier(event):
         bouton_rotation_D()
         
     if touche=='Down':
-        a1.liste_robot[0].setVitesse(-1)
+        a1.liste_robot[0].setVitesse(-2)
         a1.liste_robot[0].move_bis()
         rafraichir(a1)
         
@@ -263,7 +270,7 @@ def rafraichir(arene):
             dessiner_cube(c,arene)
             
     if(len(arene.liste_robot) == 1):
-        print(arene.liste_robot[0].tete.orientation)
+        #print(arene.liste_robot[0].tete.orientation)
         dessiner_robot(arene.liste_robot[0])
         #print("R.rafrai.",arene.liste_robot[0].position)
 

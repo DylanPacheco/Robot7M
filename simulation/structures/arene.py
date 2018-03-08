@@ -1,10 +1,10 @@
 from math import acos
 from math import sqrt
 from ast import literal_eval
-from Cube import *
-from Mur import *
-from Sol import *
-from Robot import *
+from basiques.cube import *
+from basiques.mur import *
+from basiques.sol import *
+from structures.robot import *
 
 class Arene :
     """ Classe Arene caracterisée par les attributs:
@@ -67,7 +67,7 @@ class Arene :
                 long = random.randint(0, long_max)
                 larg = random.randint(0, larg_max)
 
-                m = Mur(x, y, 0, long, larg, 0)
+                m = Mur(x, y, 0, long, larg, 40)
                 self.ajouter_cube(m)
 
                 i = i + 1

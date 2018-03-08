@@ -2,7 +2,8 @@
 
 import random
 import math
-from TeteRobot import*
+from structures.teteRobot import *
+from .intel.strategy import *
 #code
 
 class Robot:
@@ -16,61 +17,53 @@ class Robot:
         sa tete: Class TeteRobot
     """
 
-    def __init__(self, position, coords, direction, dimension, vitesse):
+    def __init__(self, position, coords, direction, dimension, vitesse, strat=Strat(0)):
         self.position = position
         self.coords = coords
         self.direction = direction
         self.dimension = dimension
         self.vitesse = vitesse
         self.tete= Creation_TeteRobot()
-    
-    def move(self,direc):
-        x, y, z = self.getPosition()
-        a, b = direc
-        vitesse = self.getVitesse()
-        #xt, yt, zt = (self.tete).getPosition()
-        longr, larg, haut = self.getDimension()
-        
-        x += a*vitesse
-        y += b*vitesse
-        #z += c*vitesse
-        z += 0
-        self.__setPosition((x, y, z))
-        
-        #xt= x + larg/2
-        #yt= y
-        #zt= z + haut/2
-        #(self.tete).setPosition((xt, yt, zt))
+        self.strat=strat
 
 
     def move_bis(self):
         x, y, z = self.position
         xdir, ydir = self.direction
-        larg, long, haut = self.dimension
+        #larg, long, haut = self.dimension
         (x0,y0), (x1,y1), (x2,y2), (x3,y3) = self.coords
         
         vitesse = self.vitesse
-        x += self.direction[0]*vitesse
-        y += self.direction[1]*vitesse
 
-        x0 += self.direction[0]*vitesse
-        y0 += self.direction[1]*vitesse
-        x1 += self.direction[0]*vitesse
-        y1 += self.direction[1]*vitesse
-        x2 += self.direction[0]*vitesse
-        y2 += self.direction[1]*vitesse
-        x3 += self.direction[0]*vitesse
-        y3 += self.direction[1]*vitesse
+        v0 = (self.direction[0]*vitesse)/10
+        v1 = (self.direction[1]*vitesse)/10
+        
+        x += v0
+        y += v1
         
 
+        x0 += v0
+        y0 += v1
+        x1 += v0
+        y1 += v1
+        x2 += v0
+        y2 += v1
+        x3 += v0
+        y3 += v1
+        
         self.__setPosition((x, y, z))
-        #print("1:",self.coords)
         self.setCoords(((x0,y0),(x1,y1),(x2,y2),(x3,y3)))
-        #self.setCoords( ((x-larg/2, y+long/2), (x+larg/2, y+long/2), (x+larg/2, y-long/2), (x-larg/2, y-long/2)) )
-        #print("2:",self.coords)
         #print("dir=",self.direction,"    centre=",self.position,"    coords=",self.coords)
         
-        
+    def interprete_strat(self, s):
+        if(s=='F'):
+            self.move_bis()
+        elif(s=='R'):
+            self.rotation_bis(-90)
+        elif(s=='L'):
+            self.rotation_bis(90)
+		
+    	   
     def retourne_angle(self,x,y,xx,yy) :
         """ retourne un angle teta en radian selon une direction initale d'un
             vecteur u(x,y) et une les coordonées du vecteur de la prochaine
@@ -86,22 +79,6 @@ class Robot:
         if(sgn < 0):
             return -1*teta
         return teta
-        #teta: int en degré
-
-    
-    def rotation(self, teta):
-
-        """la rotation est effectuée dans le sens anti-horaire"""
-        teta = math.radians(teta)
-        a, b = self.getDirection()
-        temp = a
-        a = math.ceil(a*math.cos(teta) - b*math.sin(teta))
-        b = math.ceil(temp*math.sin(teta) + b*math.cos(teta))
-        if(a == -0.0):
-            a = abs(a)
-        if(b == -0.0):
-            b = abs(b)
-        self.__setDirection((a, b))
 
 
     def rotation_bis(self,teta):
@@ -153,7 +130,7 @@ class Robot:
                 """
                 return "ROBOT([Corps] position: {0}, direction: {1}, dimension{2}, vitesse: {3}".format(self.getPosition(),self.getDirection(),self.getDimension(),self.getVitesse())#||| "+self.tete.safficher()+")"
                 
-
+              
     """-----------------------GETTTER-------------------------"""
     def getPosition(self):
         return self.position
@@ -180,8 +157,9 @@ class Robot:
     def setCoords(self, coords):
         self.coords = coords
         
+    def setStrat(self, strat):
+        self.strat=strat
         
-    
     """-----------------------SAVER-------------------------"""
     def toSaveF(self, f):
         """Ecrit les coordonnees du robot dans le fichier ouvert passe en argument, avec ';' comme separation"""
@@ -191,30 +169,19 @@ class Robot:
 def Creation_Robot(arene):
         """creation d'un Robot avec une position aleatoire"""
 
-        x = random.randint(175, arene.lx/2)
-        y = random.randint(175, arene.ly/2)
-
-        #x = random.randint(0, 100)
-        #y = random.randint(0, 100)
-
-        #x = 60
-        #y = 60
+        x = random.randint(100, arene.lx/2)
+        y = random.randint(100, arene.ly/2)
         z = 1   #un robot est posé sur le sol
 
-        larg = 40
-        long = 40
-        haut = 10
-        
-        dirx = 2
-        diry = 2
+        larg = 30
+        long = 50
+        haut = 15
 
         dirxy1 = (x, y)
         dirxy2 = (((x-larg/2)+(x+larg/2))/2, ((y+long/2)+(y+long/2))/2 )
-        
         newdir = ( round(dirxy2[0]-dirxy1[0]), round(dirxy2[1]-dirxy1[1]) )
-
         vitesse = 1
-
+        
         coords = ((x-larg/2, y+long/2), (x+larg/2, y+long/2), (x+larg/2, y-long/2), (x-larg/2, y-long/2))
 
         return Robot((x, y, z), coords, newdir, (larg, long, haut), vitesse)
