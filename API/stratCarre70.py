@@ -1,4 +1,5 @@
 import strat70
+import stratRotD90
 import robot2I013
 
 class StratCarre70():
@@ -9,15 +10,20 @@ class StratCarre70():
         self.stop=False
         self.robot=robot
         self.S70=Strat70(robot)
+        self.SRot=StratRotD90(robot)
         
     def update():
-        while cpt < 4:
-            while not self.S70.stop():
-                self.S70.update()
-            self.robot.set_motor_position(MOTOR_RIGHT,-90)
-            self.robot.set_motor_position(MOTOR_LEFT,90)
-            cpt+=1
-        self.stop=True
+        if not self.S70.stop():
+            self.S70.update()
+        else:
+            if not self.SRot.stop():
+                self.SRot.update()
+            else:
+                self.S70=Strat70(self.robot)
+                self.cpt+=1
+                self.SRot=StratRotD90(self.robot)
+        if self.cpt == 4:
+            self.stop=True
             
     def stop():
-        return stop
+        return self.stop

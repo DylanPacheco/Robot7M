@@ -1,6 +1,10 @@
 import time
 import math
-from easygopigo3 import EasyGoPiGo3,Servo,DistanceSensor,MotionSensor
+from easygopigo3 import EasyGoPiGo3
+try:
+    from easygopigo3 import Servo,DistanceSensor,MotionSensor
+except Exception as e:
+    print("Import foireuse")
 import picamera
 from io import BytesIO
 from PIL import Image
@@ -33,8 +37,6 @@ class Robot2I013(object):
         """
 
         self._gpg= EasyGoPiGo3()
-        self.controler = controler
-        self.fps=fps
         self.LED_LEFT_EYE = self._gpg.LED_LEFT_EYE
         self.LED_RIGHT_EYE = self._gpg.LED_RIGHT_EYE
         self.LED_LEFT_BLINKER = self._gpg.LED_LEFT_BLINKER
@@ -62,31 +64,6 @@ class Robot2I013(object):
         except Exception as e:
             print("IMU sensor not found",e)
         self._gpg.set_motor_limits(self._gpg.MOTOR_LEFT+self._gpg.MOTOR_RIGHT,0)
-
-    def run(self,verbose=True):
-        """ 
-            Boucle principale du robot. Elle appelle controler.update() fps fois par seconde 
-            et s'arrete quand controler.stop() rend vrai.
-            :verbose: booleen pour afficher les messages de debuggages
-        """
-        if verbose:
-            print("Starting ... (with %f FPS  -- %f sleep)" % (self.fps,1./self.fps))
-        ts=time.time()
-        tstart = ts
-        cpt = 0
-        try:
-            while not self.controler.stop():
-                ts = time.time()
-                self.controler.update()
-                time.sleep(1./self.fps)
-                if verbose:
-                    print("Loop %d, duree : %fs " % (cpt,time.time()-ts))
-                cpt+=1
-        except Exception as e:
-            print("Erreur : ",e)
-        self.stop()
-        if verbose:
-            print("Stoping ... total duration : %f (%f /loop)" % (time.time()-tstart,(time.time()-tstart)/cpt))
 
     def set_led(self, led, red = 0, green = 0, blue = 0):
         """
@@ -165,6 +142,7 @@ class Robot2I013(object):
         :param int position: Angle de rotation, de **0** a **180** degres, 90 pour le milieu.
         """
         self.servo.rotate_servo(position)
+        
     def stop(self):
         """ Arrete le robot """
         self.set_motor_dps(self.MOTOR_LEFT+self.MOTOR_RIGHT,0)
