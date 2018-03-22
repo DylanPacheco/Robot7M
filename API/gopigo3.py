@@ -88,44 +88,31 @@ class GoPiGo3(object):
     
     SPI_MESSAGE_TYPE = Enumeration("""
         NONE,
-
         GET_MANUFACTURER,
         GET_NAME,
         GET_HARDWARE_VERSION,
         GET_FIRMWARE_VERSION,
         GET_ID,
-
         SET_LED,
-
         GET_VOLTAGE_5V,
         GET_VOLTAGE_VCC,
-
         SET_SERVO,
-
         SET_MOTOR_PWM,
-
         SET_MOTOR_POSITION,
         SET_MOTOR_POSITION_KP,
         SET_MOTOR_POSITION_KD,
-
         SET_MOTOR_DPS,
-
         SET_MOTOR_LIMITS,
-
         OFFSET_MOTOR_ENCODER,
-
         GET_MOTOR_ENCODER_LEFT,
         GET_MOTOR_ENCODER_RIGHT,
-
         GET_MOTOR_STATUS_LEFT,
         GET_MOTOR_STATUS_RIGHT,
-
         SET_GROVE_TYPE,
         SET_GROVE_MODE,
         SET_GROVE_STATE,
         SET_GROVE_PWM_DUTY,
         SET_GROVE_PWM_FREQUENCY,
-
         GET_GROVE_VALUE_1,
         GET_GROVE_VALUE_2,
         GET_GROVE_STATE_1_1,
@@ -140,7 +127,6 @@ class GoPiGo3(object):
         GET_GROVE_ANALOG_1_2,
         GET_GROVE_ANALOG_2_1,
         GET_GROVE_ANALOG_2_2,
-
         START_GROVE_I2C_1,
         START_GROVE_I2C_2,
     """)
@@ -205,7 +191,6 @@ class GoPiGo3(object):
     def __init__(self, addr = 8, detect = True):
         """
         Do any necessary configuration, and optionally detect the GoPiGo3
-
         * Optionally set the SPI address to something other than 8
         * Optionally disable the detection of the GoPiGo3 hardware. This can be used for debugging
           and testing when the GoPiGo3 would otherwise not pass the detection tests.
@@ -234,10 +219,8 @@ class GoPiGo3(object):
     def spi_transfer_array(self, data_out):
         """
         Conduct a SPI transaction
-
         Keyword arguments:
         data_out -- a list of bytes to send. The length of the list will determine how many bytes are transferred.
-
         Returns a list of the bytes read.
         """
         result = GPG_SPI.xfer2(data_out)
@@ -246,10 +229,8 @@ class GoPiGo3(object):
     def spi_read_8(self, MessageType):
         """
         Read an 8-bit value over SPI
-
         Keyword arguments:
         MessageType -- the SPI message type
-
         Returns touple:
         value, error
         """
@@ -263,10 +244,8 @@ class GoPiGo3(object):
     def spi_read_16(self, MessageType):
         """
         Read a 16-bit value over SPI
-
         Keyword arguments:
         MessageType -- the SPI message type
-
         Returns touple:
         value, error
         """
@@ -280,10 +259,8 @@ class GoPiGo3(object):
     def spi_read_32(self, MessageType):
         """
         Read a 32-bit value over SPI
-
         Keyword arguments:
         MessageType -- the SPI message type
-
         Returns touple:
         value, error
         """
@@ -297,7 +274,6 @@ class GoPiGo3(object):
     def spi_write_32(self, MessageType, Value):
         """
         Send a 32-bit value over SPI
-
         Keyword arguments:
         MessageType -- the SPI message type
         Value -- the value to be sent
@@ -309,7 +285,6 @@ class GoPiGo3(object):
     def get_manufacturer(self):
         """
         Read the 20 charactor GoPiGo3 manufacturer name
-
         Returns touple:
         GoPiGo3 manufacturer name string, error
         """
@@ -330,7 +305,6 @@ class GoPiGo3(object):
     def get_board(self):
         """
         Read the 20 charactor GoPiGo3 board name
-
         Returns touple:
         GoPiGo3 board name string, error
         """
@@ -351,7 +325,6 @@ class GoPiGo3(object):
     def get_version_hardware(self):
         """
         Read the hardware version
-
         Returns touple:
         hardware version, error
         """
@@ -361,7 +334,6 @@ class GoPiGo3(object):
     def get_version_firmware(self):
         """
         Read the firmware version
-
         Returns touple:
         firmware version, error
         """
@@ -371,7 +343,6 @@ class GoPiGo3(object):
     def get_id(self):
         """
         Read the 128-bit GoPiGo3 hardware serial number
-
         Returns touple:
         serial number as 32 char HEX formatted string, error
         """
@@ -388,7 +359,6 @@ class GoPiGo3(object):
     def set_led(self, led, red, green = 0, blue = 0):
         """
         Set an LED
-
         Keyword arguments:
         led -- The LED(s). LED_LEFT_EYE, LED_RIGHT_EYE, LED_LEFT_BLINKER, LED_RIGHT_BLINKER, and/or LED_WIFI.
         red -- The LED's Red color component (0-255)
@@ -419,7 +389,6 @@ class GoPiGo3(object):
     def get_voltage_5v(self):
         """
         Get the 5v circuit voltage
-
         Returns touple:
         5v circuit voltage, error
         """
@@ -429,7 +398,6 @@ class GoPiGo3(object):
     def get_voltage_battery(self):
         """
         Get the battery voltage
-
         Returns touple:
         battery voltage, error
         """
@@ -439,7 +407,6 @@ class GoPiGo3(object):
     def set_servo(self, servo, us):
         """
         Set a servo position in microseconds
-
         Keyword arguments:
         servo -- The servo(s). SERVO_1 and/or SERVO_2.
         us -- The pulse width in microseconds (0-16666)
@@ -451,7 +418,6 @@ class GoPiGo3(object):
     def set_motor_power(self, port, power):
         """
         Set the motor power in percent
-
         Keyword arguments:
         port -- The motor port(s). MOTOR_LEFT and/or MOTOR_RIGHT.
         power -- The PWM power from -100 to 100, or MOTOR_FLOAT for float.
@@ -466,7 +432,6 @@ class GoPiGo3(object):
     def set_motor_position(self, port, position):
         """
         Set the motor target position in degrees
-
         Keyword arguments:
         port -- The motor port(s). MOTOR_LEFT and/or MOTOR_RIGHT.
         position -- The target position
@@ -480,7 +445,6 @@ class GoPiGo3(object):
     def set_motor_dps(self, port, dps):
         """
         Set the motor target speed in degrees per second
-
         Keyword arguments:
         port -- The motor port(s). MOTOR_LEFT and/or MOTOR_RIGHT.
         dps -- The target speed in degrees per second
@@ -493,7 +457,6 @@ class GoPiGo3(object):
     def set_motor_limits(self, port, power = 0, dps = 0):
         """
         Set the motor speed limit
-
         Keyword arguments:
         port -- The motor port(s). MOTOR_LEFT and/or MOTOR_RIGHT.
         power -- The power limit in percent (0 to 100), with 0 being no limit (100)
@@ -507,10 +470,8 @@ class GoPiGo3(object):
     def get_motor_status(self, port):
         """
         Read a motor status
-
         Keyword arguments:
         port -- The motor port (one at a time). MOTOR_LEFT or MOTOR_RIGHT.
-
         Returns a list:
             flags -- 8-bits of bit-flags that indicate motor status:
                 bit 0 -- LOW_VOLTAGE_FLOAT - The motors are automatically disabled because the battery voltage is too low
@@ -549,10 +510,8 @@ class GoPiGo3(object):
     def get_motor_encoder(self, port):
         """
         Read a motor encoder in degrees
-
         Keyword arguments:
         port -- The motor port (one at a time). MOTOR_LEFT or MOTOR_RIGHT.
-
         Returns the encoder position in degrees
         """
         if port == self.MOTOR_LEFT:
@@ -571,11 +530,9 @@ class GoPiGo3(object):
     def offset_motor_encoder(self, port, offset):
         """
         Offset a motor encoder
-
         Keyword arguments:
         port -- The motor port(s). MOTOR_LEFT and/or MOTOR_RIGHT.
         offset -- The encoder offset
-
         Zero the encoder by offsetting it by the current position
         """
         offset = int(offset * self.MOTOR_TICKS_PER_DEGREE)
@@ -586,7 +543,6 @@ class GoPiGo3(object):
     def set_grove_type(self, port, type):
         """
         Set grove type
-
         Keyword arguments:
         port -- The grove port(s). GROVE_1 and/or GROVE_2.
         type -- The grove device type
@@ -600,7 +556,6 @@ class GoPiGo3(object):
     def set_grove_mode(self, pin, mode):
         """
         Set grove analog digital pin mode as INPUT/OUTPUT
-
         Keyword arguments:
         pin -- The grove pin(s). GROVE_1_1, GROVE_1_2, GROVE_2_1, and/or GROVE_2_2.
         mode -- The pin mode. GROVE_INPUT_DIGITAL, GROVE_OUTPUT_DIGITAL, GROVE_INPUT_DIGITAL_PULLUP, GROVE_INPUT_DIGITAL_PULLDOWN, GROVE_INPUT_ANALOG, GROVE_OUTPUT_PWM, GROVE_INPUT_ANALOG_PULLUP, or GROVE_INPUT_ANALOG_PULLDOWN.
@@ -611,7 +566,6 @@ class GoPiGo3(object):
     def set_grove_state(self, pin, state):
         """
         Set grove output pin LOW/HIGH
-
         Keyword arguments:
         pin -- The grove pin(s). GROVE_1_1, GROVE_1_2, GROVE_2_1, and/or GROVE_2_2.
         state -- The pin state. GROVE_LOW or GROVE_HIGH.
@@ -622,7 +576,6 @@ class GoPiGo3(object):
     def set_grove_pwm_duty(self, pin, duty):
         """
         Set grove output pin PWM
-
         Keyword arguments:
         pin -- The grove pin(s). GROVE_1_1, GROVE_1_2, GROVE_2_1, and/or GROVE_2_2.
         duty -- The PWM duty cycle in percent. Floating point.
@@ -639,7 +592,6 @@ class GoPiGo3(object):
     def set_grove_pwm_frequency(self, port, freq = 24000):
         """
         Set grove PWM frequency
-
         Keyword arguments:
         port -- The grove port(s). GROVE_1 and/or GROVE_2.
         freq -- The PWM frequency. Range is 3 through 48000Hz. Default is 24000 (24kHz).
@@ -656,13 +608,11 @@ class GoPiGo3(object):
     def grove_i2c_transfer(self, port, addr, outArr, inBytes = 0):
         """
         Conduct an I2C transaction
-
         Keyword arguments:
         port -- The grove port. GROVE_1 or GROVE_2.
         addr -- The I2C address of the slave to be addressed.
         outArr -- A list of bytes to send.
         inBytes -- The number of bytes to read.
-
         Returns:
         list of bytes read from the slave
         """
@@ -699,7 +649,6 @@ class GoPiGo3(object):
     def grove_i2c_start(self, port, addr, outArr, inBytes = 0):
         """
         Start an I2C transaction
-
         Keyword arguments:
         port -- The grove port. GROVE_1 or GROVE_2.
         addr -- The I2C address of the slave to be addressed.
@@ -736,7 +685,6 @@ class GoPiGo3(object):
     def get_grove_value(self, port):
         """
         Get a grove port value
-
         Keyword arguments:
         port -- The grove port. GROVE_1 or GROVE_2.
         """
@@ -810,7 +758,6 @@ class GoPiGo3(object):
     def get_grove_state(self, pin):
         """
         Get a grove input pin state
-
         Keyword arguments:
         pin -- The grove pin (one at a time). GROVE_1_1, GROVE_1_2, GROVE_2_1, or GROVE_2_2.
         """
@@ -838,7 +785,6 @@ class GoPiGo3(object):
     def get_grove_voltage(self, pin):
         """
         Get a grove input pin analog voltage
-
         Keyword arguments:
         pin -- The grove pin (one at a time). GROVE_1_1, GROVE_1_2, GROVE_2_1, or GROVE_2_2.
         """
@@ -866,7 +812,6 @@ class GoPiGo3(object):
     def get_grove_analog(self, pin):
         """
         Get a grove input pin 12-bit raw ADC reading
-
         Keyword arguments:
         pin -- The grove pin (one at a time). GROVE_1_1, GROVE_1_2, GROVE_2_1, or GROVE_2_2.
         """

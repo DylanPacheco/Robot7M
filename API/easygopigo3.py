@@ -2389,4 +2389,3 @@ if __name__ == '__main__':
    #  g.read_temperature()
    #  g.read_dht()
    #  g.continuous_read_dht()
-

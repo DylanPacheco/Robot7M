@@ -5,7 +5,7 @@ class StratRond():
     
     def __init__(robot, rayon):
         self.distance=0
-        self.stop=False
+        self.stp=False
         self.robot=robot
         self.rayon=rayon
         
@@ -19,7 +19,7 @@ class StratRond():
                 self.cpt+=1
                 self.SRot=StratRotD90(self.robot)
         if self.cpt == 4:
-            self.stop=True
+            self.stp=True
             
     def stop():
-        return self.stop
+        return self.stp
