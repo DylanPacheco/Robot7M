@@ -3,6 +3,7 @@ import stratCarre70
 class Simulation():
 
 	def __init__(robot):
+                self.robot=robot
 		self.strategie = StratCarre70(robot)
 
 	def run(self):

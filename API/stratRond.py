@@ -1,20 +1,16 @@
-import strat70
-import stratRotD90
 import robot2I013
+import math
 
-class StratCarre70():
+class StratRond():
     
-    def __init__(robot):
+    def __init__(robot, rayon):
         self.distance=0
-        self.cpt=0
         self.stop=False
         self.robot=robot
-        self.S70=Strat70(robot)
-        self.SRot=StratRotD90(robot)
+        self.rayon=rayon
         
     def update():
-        if not self.S70.stop():
-            self.S70.update()
+        
         else:
             if not self.SRot.stop():
                 self.SRot.update()
