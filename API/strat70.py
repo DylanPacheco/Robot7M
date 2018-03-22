@@ -13,7 +13,6 @@ class Strat70():
     def update(self):
         self.prec=self.robot.get_motor_position()[0]
         self.robot.set_motor_dps(self.robot.MOTOR_LEFT+self.robot.MOTOR_RIGHT,self.vitesse)
-        print(self.distance)
         self.suiv=self.robot.get_motor_position()[0]
         self.distance+=(self.suiv-self.prec)*self.robot.WHEEL_CIRCUMFERENCE/360.0
         if self.distance > 700-self.robot.WHEEL_CIRCUMFERENCE:
