@@ -4,7 +4,7 @@ from ast import literal_eval
 from basiques.cube import *
 from basiques.mur import *
 from basiques.sol import *
-from structures.robot import *
+from roogleTranslate import *
 
 class Arene :
     """ Classe Arene caracterisée par les attributs:

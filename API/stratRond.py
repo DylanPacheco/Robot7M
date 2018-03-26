@@ -1,4 +1,4 @@
-import robot2I013
+from robot2I013 import *
 import math
 
 class StratRond():
@@ -8,18 +8,12 @@ class StratRond():
         self.stop=False
         self.robot=robot
         self.rayon=rayon
+        self.coeff=(rayon-WHEEL_BASE_WIDTH/2)/(rayon+WHEEL_BASE_WIDTH/2)
+        self.robot.set_motor_dps(robot.MOTOR_LEFT,120)
+        self.robot.set_motor_dps(robot.MOTOR_RIGHT,120*coeff)
         
     def update():
         
-        else:
-            if not self.SRot.stop():
-                self.SRot.update()
-            else:
-                self.S70=Strat70(self.robot)
-                self.cpt+=1
-                self.SRot=StratRotD90(self.robot)
-        if self.cpt == 4:
-            self.stop=True
             
     def stop():
         return self.stop

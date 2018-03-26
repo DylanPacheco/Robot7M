@@ -7,6 +7,7 @@ from basiques.cube import *
 from basiques.mur import *
 from basiques.sol import *
 from structures.capteur import *
+from roogltTranslate import *
 import random
 import time, sys
 
@@ -153,7 +154,8 @@ def clavier(event):
     """fonction d'interaction clavier"""
     robot = a1.liste_robot[0]
     long, larg, haut = robot.dimension
-    capteur = Capteur(a1)robot.interprete_strat(i)
+    capteur = Capteur(a1)
+    #robot.interprete_strat(i)
     touche=event.keysym
     distance_obstacle = capteur.detecter_distance()
     distance_arret_urgence = 6
