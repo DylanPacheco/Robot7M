@@ -1,4 +1,4 @@
-import time
+"""import time
 import math
 from easygopigo3 import EasyGoPiGo3
 try:
@@ -9,7 +9,20 @@ import picamera
 from io import BytesIO
 from PIL import Image
 from di_sensors import distance_sensor as ds_sensor
-from di_sensors import  inertial_measurement_unit as imu
+from di_sensors import  inertial_measurement_unit as imu"""
+
+import time
+import math
+try:
+    from easygopigo3 import EasyGoPiGo3
+    from easygopigo3 import Servo,DistanceSensor,MotionSensor
+    import picamera
+    from io import BytesIO
+    from PIL import Image
+    from di_sensors import distance_sensor as ds_sensor
+    from di_sensors import  inertial_measurement_unit as imu
+except Exception as e:
+    print("Import foireuse")
 
 class Robot2I013(object):
     """ 
