@@ -1,14 +1,24 @@
+import robot2I013
+import stratAvancer
+import stratRotD10
+import stratRotG10
 from PIL import Image
-import glob, os, sys
 
-def detection_balise():
-    for infile in glob.glob("*.jpg"):
-        try:
-          img = Image.open(infile)
-        except IOError:
-          print ('Erreur sur ouverture du fichier')
-          sys.exit(1)
+
+class StratImage():
+    
+    def __init__(self,robot):
+        self.distance=0
+        self.cpt=0
+        self.stp=False
+        self.robot=robot
+        self.SAvancer=stratAvancer.StratAvancer(robot)
+        self.SRotD10=stratRotD10.StratRotD10(robot)
+        self.SRotG10=stratRotG10.StratRotG10(robot)
         
+    def detection_balise(self):
+        img = Image.open("imagecouleur.jpg")
+            
         largeur = img.size[0]
         hauteur = img.size[1]
         
@@ -66,7 +76,30 @@ def detection_balise():
             lfmax += 60
             hfmax = 40
             hfmin = 0
-    return 0
+        return 0
     
-    
-#print(detection_balise())
+    def nouvelle_image(self):
+        with open("imagecouleur.jpg",'w') as fic:
+            img=self.robot.get_image()
+            img.save("imagecouleur.jpg")
+        return self.detection_balise()
+        
+    def update(self):
+        if not self.SAvancer.stop():
+            self.SAvancer.update()
+        elif not self.SRotD10.stop():
+            self.SRotD10.update()
+        elif not self.SRotG10.stop():
+            self.SRotG10.update()
+        else:
+            orientation = self.nouvelle_image()
+            # faire avancer le robot selon la valeur renvoyée par detection_balise
+            if orientation == -1:
+                self.SRotG10=stratRotG10.StratRotG10(self.robot)
+            elif orientation == 1:
+                self.SRotD10=stratRotD10.StratRotD10(self.robot)
+            else:
+                self.SAvancer=stratAvancer.StratAvancer(self.robot)
+            
+    def stop(self):
+        return self.stp
